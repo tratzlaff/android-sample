@@ -50,6 +50,46 @@ public class DisplayMessageActivity extends ActionBarActivity
     }
 
     /**
+     * Stop ongoing actions that should not continue while paused (such as a video)
+     * or persist any information that should be permanently
+     * saved in case the user continues to leave your app.
+     *
+     * When your activity receives a call to onPause(), it may be an indication that the
+     * activity will be paused for a moment and the user may return focus to your activity.
+     * However, it's usually the first indication that the user is leaving your activity.
+     *
+     * Avoid performing CPU-intensive work during onPause(), such as writing to a database,
+     * because it can slow the visible transition to the next activity.
+     * You should instead perform heavy-load shutdown operations during onStop().
+     *
+     * When your activity is paused, the Activity instance is kept resident in memory and is
+     * recalled when the activity resumes. You don’t need to re-initialize components that
+     * were created during any of the callback methods leading up to the Resumed state.
+     *
+     * https://developer.android.com/training/basics/activity-lifecycle/pausing.html#Pause
+     */
+    @Override
+    protected void onPause()
+    {
+        super.onPause(); // Always call the superclass method first
+    }
+
+    /**
+     * The system calls this method every time your activity comes into the foreground,
+     * including when it's created for the first time or when the user resumes your activity from the Paused state.
+     * As such, you should implement onResume() to initialize components that you release during onPause()
+     * and perform any other initializations that must occur each time the activity enters the Resumed state
+     * (such as begin animations and initialize components only used while the activity has user focus).
+     *
+     * https://developer.android.com/training/basics/activity-lifecycle/pausing.html#Resume
+     */
+    @Override
+    protected void onResume()
+    {
+        super.onResume(); // Always call the superclass method first
+    }
+
+    /**
      * Most apps don't need to implement this method because local class references are destroyed with
      * the activity and your activity should perform most cleanup during onPause() and onStop().
      * However, if your activity includes background threads that you created during onCreate() or
@@ -64,8 +104,9 @@ public class DisplayMessageActivity extends ActionBarActivity
     @Override
     public void onDestroy()
     {
-        super.onDestroy();  // Always call the superclass
+        super.onDestroy();  // Always call the superclass method first
     }
+
 
 
     /**
