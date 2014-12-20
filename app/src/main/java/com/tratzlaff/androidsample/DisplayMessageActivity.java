@@ -90,6 +90,75 @@ public class DisplayMessageActivity extends ActionBarActivity
     }
 
     /**
+     * When your activity receives a call to the onStop() method, it's no longer visible
+     * and should release almost all resources that aren't needed while the user is not using it.
+     * Once your activity is stopped, the system might destroy the instance if it needs to recover system memory.
+     * In extreme cases, the system might simply kill your app process without calling the activity's final
+     * onDestroy() callback, so it's important you use onStop() to release resources that might leak memory.
+     *
+     * Although the onPause() method is called before onStop(), you should use onStop() to perform larger,
+     * more CPU intensive shut-down operations, such as writing information to a database.
+     *
+     * When your activity is stopped, the Activity object is kept resident in memory and is recalled when
+     * the activity resumes. You don’t need to re-initialize components that were created during any of the
+     * callback methods leading up to the Resumed state. The system also keeps track of the current state
+     * for each View in the layout, so if the user entered text into an EditText widget, that content is
+     * retained so you don't need to save and restore it.
+     *
+     * Even if the system destroys your activity while it's stopped, it still retains the state of the View
+     * objects (such as text in an EditText) in a Bundle (a blob of key-value pairs) and restores them if
+     * the user navigates back to the same instance of the activity
+     *
+     * https://developer.android.com/training/basics/activity-lifecycle/stopping.html#Stop
+     */
+    @Override
+    protected void onStop()
+    {
+        super.onStop(); // Always call the superclass method first
+    }
+
+    /**
+     * When your activity comes back to the foreground from the stopped state, it receives a call to onRestart().
+     * The system also calls the onStart() method, which happens every time your activity becomes visible
+     * (whether being restarted or created for the first time). The onRestart() method, however, is called
+     * only when the activity resumes from the stopped state, so you can use it to perform special restoration
+     * work that might be necessary only if the activity was previously stopped, but not destroyed.
+     *
+     * It's uncommon that an app needs to use onRestart() to restore the activity's state, so there aren't any
+     * guidelines for this method that apply to the general population of apps. However, because your onStop()
+     * method should essentially clean up all your activity's resources, you'll need to re-instantiate them when
+     * the activity restarts. Yet, you also need to instantiate them when your activity is created for the first
+     * time (when there's no existing instance of the activity). For this reason, you should usually use the onStart()
+     * callback method as the counterpart to the onStop() method, because the system calls onStart() both when it
+     * creates your activity and when it restarts the activity from the stopped state.
+     *
+     * https://developer.android.com/training/basics/activity-lifecycle/stopping.html#Start
+     */
+    @Override
+    protected void onRestart()
+    {
+        super.onRestart(); // Always call the superclass method first
+    }
+
+    /**
+     * This method is called every time this activity becomes visible
+     * (whether being restarted or created for the first time).
+     *
+     * Your onStop() method should essentially clean up all your activity's resources, so you'll need to re-instantiate
+     * them when the activity restarts. You also need to instantiate them when your activity is created for the first
+     * time (when there's no existing instance of the activity). For this reason, you should usually use the onStart()
+     * callback method as the counterpart to the onStop() method, because the system calls onStart() both when it
+     * creates your activity and when it restarts the activity from the stopped state.
+     *
+     * https://developer.android.com/training/basics/activity-lifecycle/stopping.html#Start
+     */
+    @Override
+    protected void onStart()
+    {
+        super.onStart(); // Always call the superclass method first
+    }
+
+    /**
      * Most apps don't need to implement this method because local class references are destroyed with
      * the activity and your activity should perform most cleanup during onPause() and onStop().
      * However, if your activity includes background threads that you created during onCreate() or
